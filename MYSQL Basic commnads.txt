@@ -1,0 +1,359 @@
+mysql> Create database Sample;
+mysql> use sample
+Database changed
+mysql>
+mysql> Create table student(Rollno integer Primary Key, Name varchar(30) NOT NULL, Marks float check(Marks >= 0), Address varchar(50) default 'Mumbai');
+mysql>
+mysql> Insert into student values(101, 'ABC', 123, 'Panvel');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> Select * from student;
++--------+------+-------+---------+
+| Rollno | Name | Marks | Address |
++--------+------+-------+---------+
+|    101 | ABC  |   123 | Panvel  |
++--------+------+-------+---------+
+
+mysql>
+ Insert into student values(102, 'ABCD', 100, 'Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql>
+mysql> Insert into student values(103, 'Rahul', 80, 'Mumbai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> Insert into student values(104, 'Raj', 70, 'Panvel');
+
+ Insert into student values(105, 'Anil', 50, 'Vashi');
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> Insert into student values(109, 'ABCDEF', 85);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql>
+mysql>
+mysql> Insert into student (Rollno, Name, Marks) values(109, 'ABCDEF', 85);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+
+-----------------------------------------------------------------------
+WHERE CLAUSE
+
+mysql>
+mysql> select * from student WHERE Rollno = 101;
++--------+------+-------+---------+
+| Rollno | Name | Marks | Address |
++--------+------+-------+---------+
+|    101 | ABC  |   123 | Panvel  |
++--------+------+-------+---------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+mysql> select * from student WHERE marks>=50 AND marks <= 100;
++--------+--------+-------+---------+
+| Rollno | Name   | Marks | Address |
++--------+--------+-------+---------+
+|    102 | ABCD   |   100 | Mumbai  |
+|    103 | Rahul  |    80 | Mumbai  |
+|    104 | Raj    |    70 | Panvel  |
+|    105 | Anil   |    50 | Vashi   |
+|    108 | ABCDE  |    75 | Mumbai  |
+|    109 | ABCDEF |    85 | Mumbai  |
++--------+--------+-------+---------+
+6 rows in set (0.03 sec)
+
+mysql>
+
+
+mysql> select * from student WHERE Address='Mumbai';
++--------+--------+-------+---------+
+| Rollno | Name   | Marks | Address |
++--------+--------+-------+---------+
+|    102 | ABCD   |   100 | Mumbai  |
+|    103 | Rahul  |    80 | Mumbai  |
+|    108 | ABCDE  |    75 | Mumbai  |
+|    109 | ABCDEF |    85 | Mumbai  |
++--------+--------+-------+---------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> select * from student WHERE Address <> 'Mumbai';
++--------+-------+-------+---------+
+| Rollno | Name  | Marks | Address |
++--------+-------+-------+---------+
+|    101 | ABC   |   123 | Panvel  |
+|    104 | Raj   |    70 | Panvel  |
+|    105 | Anil  |    50 | Vashi   |
+|    106 | Abhay |  NULL | Vashi   |
+|    107 | Ab    |   -50 | Vashi   |
++--------+-------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql>
+-------------------------------------------------------------------
+RANGE OPERATORS
+1] BETWEEN , NOT BETWEEN
+
+
+mysql> select * from student WHERE Address='Mumbai';
++--------+--------+-------+---------+
+| Rollno | Name   | Marks | Address |
++--------+--------+-------+---------+
+|    102 | ABCD   |   100 | Mumbai  |
+|    103 | Rahul  |    80 | Mumbai  |
+|    108 | ABCDE  |    75 | Mumbai  |
+|    109 | ABCDEF |    85 | Mumbai  |
++--------+--------+-------+---------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> select * from student WHERE Address <> 'Mumbai';
++--------+-------+-------+---------+
+| Rollno | Name  | Marks | Address |
++--------+-------+-------+---------+
+|    101 | ABC   |   123 | Panvel  |
+|    104 | Raj   |    70 | Panvel  |
+|    105 | Anil  |    50 | Vashi   |
+|    106 | Abhay |  NULL | Vashi   |
+|    107 | Ab    |   -50 | Vashi   |
++--------+-------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql>
+-------------------------------------------------------------------
+IN, NOT IN
+
+
+mysql> select * from student WHERE ADDRESS IN('Mumbai', 'Delhi', 'VASHI');
++--------+--------+-------+---------+
+| Rollno | Name   | Marks | Address |
++--------+--------+-------+---------+
+|    102 | ABCD   |   100 | Mumbai  |
+|    103 | Rahul  |    80 | Mumbai  |
+|    105 | Anil   |    50 | Vashi   |
+|    106 | Abhay  |  NULL | Vashi   |
+|    107 | Ab     |   -50 | Vashi   |
+|    108 | ABCDE  |    75 | Mumbai  |
+|    109 | ABCDEF |    85 | Mumbai  |
++--------+--------+-------+---------+
+7 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> select * from student WHERE ADDRESS NOT IN('Mumbai', 'Delhi', 'VASHI');
++--------+------+-------+---------+
+| Rollno | Name | Marks | Address |
++--------+------+-------+---------+
+|    101 | ABC  |   123 | Panvel  |
+|    104 | Raj  |    70 | Panvel  |
++--------+------+-------+---------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+---------------------------------------------------------------------------------\
+LIKE, NOT LIKE
+
+select * from student WHERE Name like 'A%';
+select * from student WHERE Name not like 'A%';
+
+
+mysql> select * from student WHERE Name like '___';
++--------+------+-------+---------+
+| Rollno | Name | Marks | Address |
++--------+------+-------+---------+
+|    101 | ABC  |   123 | Panvel  |
+|    104 | Raj  |    70 | Panvel  |
++--------+------+-------+---------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> select * from student WHERE Name like '____';
++--------+------+-------+---------+
+| Rollno | Name | Marks | Address |
++--------+------+-------+---------+
+|    102 | ABCD |   100 | Mumbai  |
+|    105 | Anil |    50 | Vashi   |
++--------+------+-------+---------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+
+mysql> select * from student WHERE Name like '_b%';
++--------+--------+-------+---------+
+| Rollno | Name   | Marks | Address |
++--------+--------+-------+---------+
+|    101 | ABC    |   123 | Panvel  |
+|    102 | ABCD   |   100 | Mumbai  |
+|    106 | Abhay  |  NULL | Vashi   |
+|    107 | Ab     |   -50 | Vashi   |
+|    108 | ABCDE  |    75 | Mumbai  |
+|    109 | ABCDEF |    85 | Mumbai  |
++--------+--------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql>
+----------------------------------------------------------------------
+IS NULL, IS NOT NULL
+
+
+mysql> select * from student WHERE MARKS IS NULL;
++--------+-------+-------+---------+
+| Rollno | Name  | Marks | Address |
++--------+-------+-------+---------+
+|    106 | Abhay |  NULL | Vashi   |
++--------+-------+-------+---------+
+1 row in set (0.00 sec)
+
+
+mysql> select * from student WHERE MARKS IS NOT NULL;
+mysql>
+---------------------------------------------------------------------
+--ORDER BY
+
+select * from student ORDER BY Marks;
+select * from student ORDER BY Marks DESC;
+
+----------------------------------------------------------------------
+
+-- Distinct keyword
+
+mysql> select Distinct(Address) from student;
++---------+
+| Address |
++---------+
+| Panvel  |
+| Mumbai  |
+| Vashi   |
++---------+
+3 rows in set (0.02 sec)
+
+mysql>
+-----------------------------------------------------------------------------------
+AGG FUNCTIONS
+
+1] sum()
+
+mysql> select sum(marks) from student;
++------------+
+| sum(marks) |
++------------+
+|        533 |
++------------+
+1 row in set (0.02 sec)
+
+mysql>
+mysql>
+mysql> select sum(marks) 'Total Marks' from student;
++-------------+
+| Total Marks |
++-------------+
+|         533 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+2] avg()
+
+mysql> select avg(marks) from student;
++------------+
+| avg(marks) |
++------------+
+|     66.625 |
++------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+3] min()
+select min(marks) from student;
+
+4] max()
+select max(marks) from student;
+
+
+5] count(*)
+
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|        9 |
++----------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+mysql>
+mysql> select count(distinct address) from student;
++-------------------------+
+| count(distinct address) |
++-------------------------+
+|                       3 |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+-----------------------------------------------------------------------------
+
+-- UPDATE
+mysql> Update Student SET Marks = 200 WHERE Rollno = 101;
+
+-- Delete
+ Delete From Student WHERE Marks IS NULL;
+Query OK, 1 row affected (0.03 sec)
+
+--------------------------------------------------------------
+-- ALTER 
+ALTER TABLE Student ADD(Mobile varchar(10));
+
+ALTER TABLE Student MODIFY Name varchar(50);
+-------------------------------------------------------------- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
